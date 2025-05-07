@@ -1,16 +1,31 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <SplashScreen v-if="loading" />
+    <div v-else>
+      <div class="min-h-screen bg-gray-100">
+      <NavBar @open-modal="handleOpenModal" />
+      <router-view />
+      <FooTer />
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
+import { ref, onMounted } from 'vue'
+import NavBar from './components/NavBar.vue'
+import SplashScreen from './components/SplashScreen.vue'
+import FooTer from './components/FooterBar.vue'
+const loading = ref(true)
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+onMounted(() => {
+  setTimeout(() => {
+    loading.value = false
+  }, 4000) // Show splash screen for 4 seconds
+})
+
+function handleOpenModal() {
+  // optional: handle modal open logic if needed
 }
 </script>
 
@@ -21,6 +36,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
